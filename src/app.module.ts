@@ -3,9 +3,23 @@ import { CategoryModule } from './category/category.module';
 import { UserModule } from './user/user.module';
 import { ProductModule } from './product/product.module';
 import { PrismaModule } from './prisma/prisma.module';
+import { ConfigModule } from '@nestjs/config';
+import { ENV_FILE_PATH } from './app.consts';
+import envSchema from './env.schema';
 
 @Module({
-  imports: [CategoryModule, UserModule, ProductModule, PrismaModule],
+  imports: [
+    ConfigModule.forRoot({
+      cache: true,
+      isGlobal: true,
+      envFilePath: ENV_FILE_PATH,
+      validationSchema: envSchema,
+    }),
+    CategoryModule,
+    UserModule,
+    ProductModule,
+    PrismaModule,
+  ],
   controllers: [],
   providers: [],
 })

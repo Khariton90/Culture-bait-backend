@@ -1,4 +1,4 @@
-import { Categories } from '@app/shared-types';
+import { Categories } from '../libs/shared-types/src/categories.enum';
 import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
@@ -49,11 +49,25 @@ async function main() {
     },
   });
 
+  const user = await prisma.user.upsert({
+    where: { id: 1 },
+    update: {},
+    create: {
+      firstName: 'John',
+      lastName: 'Doe',
+      phoneNumber: '89000000000',
+      passwordHash: '123456',
+      role: 'admin',
+    },
+  });
+
+  console.log(user);
   console.log(categories);
   console.log(products);
   console.log(images);
   console.log(attrs);
 }
+
 main()
   .then(async () => {
     await prisma.$disconnect();
