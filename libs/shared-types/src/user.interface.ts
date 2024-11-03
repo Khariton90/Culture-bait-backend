@@ -1,9 +1,9 @@
-import { UserRole } from './user-role.enum';
-
 export interface User {
-  id: number;
-  username: string;
-  email: string;
+  firstName: string;
+  lastName: string;
+  phoneNumber: string;
   passwordHash: string;
-  role: UserRole;
+  role: string;
+  id?: number;
+  email?: string;
 }
