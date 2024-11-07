@@ -5,6 +5,7 @@ import { ProductModule } from './product/product.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { ConfigModule } from '@nestjs/config';
 import { ENV_FILE_PATH } from './app.consts';
+import { AuthModule } from './auth/auth.module';
 import envSchema from './env.schema';
 
 @Module({
@@ -19,6 +20,7 @@ import envSchema from './env.schema';
     UserModule,
     ProductModule,
     PrismaModule,
+    AuthModule,
   ],
   controllers: [],
   providers: [],
