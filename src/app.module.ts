@@ -4,7 +4,7 @@ import { UserModule } from './user/user.module';
 import { ProductModule } from './product/product.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { ConfigModule } from '@nestjs/config';
-import { ENV_FILE_PATH } from './app.consts';
+import { ENV_FILE_PATH } from './app.constants';
 import { AuthModule } from './auth/auth.module';
 import envSchema from './env.schema';
 
