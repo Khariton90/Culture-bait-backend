@@ -1,8 +1,9 @@
 import { BadRequestException } from '@nestjs/common';
 import { Request } from 'express';
+import { FILE_TYPE_BAD_REQUEST_MESSAGE } from '../product.constants';
 
 export const fileNameEditor = (
-  req: Request,
+  _: Request,
   file: Express.Multer.File,
   cb: (err: Error, filename: string) => void,
 ) => {
@@ -11,19 +12,15 @@ export const fileNameEditor = (
 };
 
 export const imageFileFilter = (
-  req: Request,
+  _: Request,
   file: Express.Multer.File,
   cb: (err: Error, valid: boolean) => void,
 ) => {
-  console.log(file);
   if (
     !file.originalname ||
     !file.originalname.match(/\.(jpg|jpeg|png|webp|avif)$/)
   ) {
-    return cb(
-      new BadRequestException('File must b of type /.(jpg|jpeg|png|webp|avif'),
-      false,
-    );
+    return cb(new BadRequestException(FILE_TYPE_BAD_REQUEST_MESSAGE), false);
   }
 
   return cb(null, true);
