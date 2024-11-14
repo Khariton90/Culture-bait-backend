@@ -5,7 +5,7 @@ export class ProductRdo {
   public id: number;
 
   @Expose()
-  public name: string;
+  public title: string;
 
   @Expose()
   public description: string;
@@ -18,4 +18,19 @@ export class ProductRdo {
 
   @Expose()
   public categoryId: number;
+
+  @Expose()
+  public isNew: boolean;
+
+  @Expose()
+  public isBestSeller: boolean;
+
+  @Expose()
+  public onSale: boolean;
+
+  @Expose()
+  public clearance: boolean;
+
+  @Expose()
+  public images: [];
 }

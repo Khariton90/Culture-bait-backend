@@ -47,7 +47,7 @@ export class CategoryRepository
         ...entityData,
         id,
         products: {
-          connect: [...entityData.products],
+          connect: entityData,
         },
       },
       include: {

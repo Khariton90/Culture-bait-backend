@@ -5,11 +5,13 @@ import { ProductRepository } from './product.repository';
 export class ProductService {
   constructor(private readonly productRepository: ProductRepository) {}
 
-  public find() {
-    return this.productRepository.find();
+  public async find() {
+    const products = await this.productRepository.find();
+    console.log(products);
+    return products;
   }
 
-  public findById(id: number) {
+  public async findById(id: number) {
     return this.productRepository.findById(id);
   }
 }

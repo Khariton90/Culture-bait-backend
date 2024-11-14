@@ -4,7 +4,7 @@ import { Product } from '@app/shared-types/product.interface';
 
 export class CategoryEntity implements Entity<CategoryEntity>, Category {
   id: number;
-  name: string;
+  title: string;
   products: Product[];
 
   constructor(category: Category) {
@@ -17,7 +17,7 @@ export class CategoryEntity implements Entity<CategoryEntity>, Category {
 
   public fillEntity(entity: Category): void {
     this.id = entity.id;
-    this.name = entity.name;
+    this.title = entity.title;
     this.products = [...entity.products];
   }
 }

@@ -6,11 +6,18 @@ export interface Category {
 
 export interface Product {
   id: number;
-  name: string;
+  title: string;
   description: string;
   price: number;
   stock: number;
   categoryId: number;
+  isNew: boolean;
+  isBestSeller: boolean;
+  onSale: boolean;
+  clearance: boolean;
+  createdAt?: Date;
+  updatedAt?: Date;
+  images?: ProductImages[];
 }
 
 export interface Characteristics {
@@ -21,5 +28,5 @@ export interface Characteristics {
 export interface ProductImages {
   id: number;
   productId: number;
-  imagePath: string;
+  path: string;
 }

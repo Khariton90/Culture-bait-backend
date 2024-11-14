@@ -8,7 +8,7 @@ export class CategoryService {
   constructor(private readonly categoryRepository: CategoryRepository) {}
 
   public async createCategory(dto: CreateCategoryDto) {
-    const entity = new CategoryEntity({ name: dto.name, products: [] });
+    const entity = new CategoryEntity({ title: dto.title, products: [] });
     return this.categoryRepository.create(entity);
   }
 

@@ -7,4 +7,5 @@ export default Joi.object({
   PGADMIN_DEFAULT_EMAIL: Joi.string().required(),
   PGADMIN_DEFAULT_PASSWORD: Joi.string().required(),
   DATABASE_URL: Joi.string().required(),
+  FILE_UPLOAD_DIR: Joi.string(),
 });

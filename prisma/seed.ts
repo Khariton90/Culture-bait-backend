@@ -7,12 +7,12 @@ async function main() {
   const values = Object.values(Categories);
 
   const categories = await Promise.all([
-    ...values.map((name) =>
+    ...values.map((title) =>
       prisma.category.upsert({
-        where: { name },
+        where: { title },
         update: {},
         create: {
-          name,
+          title,
         },
       }),
     ),
@@ -22,7 +22,7 @@ async function main() {
     where: { id: 1 },
     update: {},
     create: {
-      name: 'Akara',
+      title: 'Akara',
       description: 'Современный смартфон с большим экраном.',
       price: 29999,
       stock: 10,

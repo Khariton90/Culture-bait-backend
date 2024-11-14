@@ -11,12 +11,19 @@ export class ProductRepository
   constructor(private readonly prisma: PrismaService) {}
 
   public async find(): Promise<Product[]> {
-    return this.prisma.product.findMany();
+    return this.prisma.product.findMany({
+      include: {
+        images: true,
+      },
+    });
   }
 
   public async findById(id: number): Promise<Product> {
     return this.prisma.product.findFirst({
       where: { id },
+      include: {
+        images: true,
+      },
     });
   }
 
@@ -26,6 +33,9 @@ export class ProductRepository
     return this.prisma.product.create({
       data: {
         ...entityData,
+        images: {
+          connect: entityData.images,
+        },
       },
     });
   }
@@ -39,6 +49,9 @@ export class ProductRepository
       },
       data: {
         ...entityData,
+        images: {
+          connect: entityData.images,
+        },
       },
     });
   }

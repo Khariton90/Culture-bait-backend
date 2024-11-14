@@ -27,20 +27,26 @@ model User {
 
 model Category {
   id        Int     @id @default(autoincrement())
-  name      String  @unique
+  title      String  @unique
   products  Product[]
 }
 
 model Product {
-  id         Int       @id @default(autoincrement())
-  name        String    
+ id         Int       @id @default(autoincrement())
+  title      String
   description String?
-  price       Float     
-  stock       Int       @default(0) 
-  category    Category? @relation(fields: [categoryId], references: [id])
-  categoryId  Int?
-  images      Image[]   
-  attributes  Attribute[]
+  price      Float
+  stock      Int       @default(0)
+  category   Category? @relation(fields: [categoryId], references: [id])
+  categoryId Int?
+  images     Image[]  
+  attributes Attribute[]
+  isNew      Boolean   @default(true)
+  isBestSeller Boolean @default(false)
+  onSale     Boolean   @default(false)
+  clearance  Boolean   @default(false)
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
 }
 
 model Image {
