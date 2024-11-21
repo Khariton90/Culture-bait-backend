@@ -5,6 +5,9 @@ export class ProductRdo {
   public id: number;
 
   @Expose()
+  public img: string;
+
+  @Expose()
   public title: string;
 
   @Expose()
@@ -14,7 +17,10 @@ export class ProductRdo {
   public price: number;
 
   @Expose()
-  public stock: number;
+  public code: number;
+
+  @Expose()
+  public qty: number;
 
   @Expose()
   public categoryId: number;
@@ -30,7 +36,4 @@ export class ProductRdo {
 
   @Expose()
   public clearance: boolean;
-
-  @Expose()
-  public images: [];
 }

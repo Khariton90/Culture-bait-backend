@@ -3,6 +3,7 @@ import { ProductEntity } from './product.entity';
 import { Product } from '@app/shared-types/product.interface';
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { ProductIdsDto } from './dto/productIds.dto';
 
 @Injectable()
 export class ProductRepository
@@ -11,9 +12,15 @@ export class ProductRepository
   constructor(private readonly prisma: PrismaService) {}
 
   public async find(): Promise<Product[]> {
+    return this.prisma.product.findMany();
+  }
+
+  public async findManyByIds(dto: ProductIdsDto) {
     return this.prisma.product.findMany({
-      include: {
-        images: true,
+      where: {
+        id: {
+          in: dto.productIds,
+        },
       },
     });
   }
@@ -21,9 +28,6 @@ export class ProductRepository
   public async findById(id: number): Promise<Product> {
     return this.prisma.product.findFirst({
       where: { id },
-      include: {
-        images: true,
-      },
     });
   }
 
@@ -33,9 +37,6 @@ export class ProductRepository
     return this.prisma.product.create({
       data: {
         ...entityData,
-        images: {
-          connect: entityData.images,
-        },
       },
     });
   }
@@ -49,9 +50,6 @@ export class ProductRepository
       },
       data: {
         ...entityData,
-        images: {
-          connect: entityData.images,
-        },
       },
     });
   }

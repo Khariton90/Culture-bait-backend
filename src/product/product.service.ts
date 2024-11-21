@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { ProductRepository } from './product.repository';
+import { ProductIdsDto } from './dto/productIds.dto';
 
 @Injectable()
 export class ProductService {
@@ -7,7 +8,11 @@ export class ProductService {
 
   public async find() {
     const products = await this.productRepository.find();
-    console.log(products);
+    return products;
+  }
+
+  public async findManyByIds(dto: ProductIdsDto) {
+    const products = await this.productRepository.findManyByIds(dto);
     return products;
   }
 

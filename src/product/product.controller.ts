@@ -13,6 +13,7 @@ import { ProductRdo } from './rdo/product.rdo';
 import { Express } from 'express';
 import { CreateFileDto } from './dto/create-file.dto';
 import { UseFileInterceptor } from './interceptors/useFIle.interceptor';
+import { ProductIdsDto } from './dto/productIds.dto';
 
 @Controller('product')
 export class ProductController {
@@ -21,6 +22,11 @@ export class ProductController {
   @Get('/')
   public async show() {
     return fillObject(ProductRdo, this.productService.find());
+  }
+
+  @Post('/cart')
+  public async findByIds(@Body() dto: ProductIdsDto) {
+    return fillObject(ProductRdo, this.productService.findManyByIds(dto));
   }
 
   @Get('/:id')
