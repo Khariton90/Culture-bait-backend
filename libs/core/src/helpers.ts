@@ -1,4 +1,6 @@
+import { SortDirection } from '@app/shared-types';
 import { ClassConstructor, plainToInstance } from 'class-transformer';
+import { ProductQuery } from 'src/product/query/product.query';
 import { ProductRdo } from 'src/product/rdo/product.rdo';
 
 export function fillObject<T, V>(someDto: ClassConstructor<T>, plainObject: V) {
@@ -54,4 +56,33 @@ export function generateMockProducts(num: number): ProductRdo[] {
   }
 
   return arr;
+}
+
+export function getSkip(page: number, limit: number): number | undefined {
+  return page > 0 ? limit * (page - 1) : undefined;
+}
+
+export function getByIdList(list: number[]): number[] | undefined {
+  return list.length > 0 ? list : undefined;
+}
+
+export function getOrderBy(query: ProductQuery) {
+  let orderBy: { [key: string]: SortDirection } = {};
+
+  switch (query.sortBy) {
+    case 'reviews':
+      orderBy = { reviews: query.sortDirection };
+      break;
+    case 'popularity':
+      orderBy = { popularity: query.sortDirection };
+      break;
+    case 'price':
+      orderBy = { price: query.sortDirection };
+      break;
+    case 'rating':
+      orderBy = { rating: query.sortDirection };
+      break;
+  }
+
+  return orderBy;
 }

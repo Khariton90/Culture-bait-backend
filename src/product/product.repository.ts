@@ -1,9 +1,10 @@
-import { CRUDRepository } from '@app/core';
+import { CRUDRepository, getByIdList, getOrderBy, getSkip } from '@app/core';
 import { ProductEntity } from './product.entity';
 import { Product } from '@app/shared-types/product.interface';
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { ProductIdsDto } from './dto/productIds.dto';
+import { ProductQuery } from './query/product.query';
 
 @Injectable()
 export class ProductRepository
@@ -11,17 +12,24 @@ export class ProductRepository
 {
   constructor(private readonly prisma: PrismaService) {}
 
-  public async find(): Promise<Product[]> {
-    return this.prisma.product.findMany();
+  public async find(query: ProductQuery): Promise<Product[]> {
+    return this.prisma.product.findMany({
+      take: query.limit,
+      orderBy: getOrderBy(query),
+      skip: getSkip(query.page, query.limit),
+    });
   }
 
-  public async findManyByIds(dto: ProductIdsDto) {
+  public async findManyByIds(dto: ProductIdsDto, query: ProductQuery) {
     return this.prisma.product.findMany({
       where: {
         id: {
-          in: dto.productIds,
+          in: getByIdList(dto.productIds),
         },
       },
+      take: query.limit,
+      orderBy: getOrderBy(query),
+      skip: getSkip(query.page, query.limit),
     });
   }
 
@@ -43,7 +51,6 @@ export class ProductRepository
 
   public async update(id: number, item: ProductEntity): Promise<Product> {
     const entityData = item.toObject();
-
     return this.prisma.product.update({
       where: {
         id,
