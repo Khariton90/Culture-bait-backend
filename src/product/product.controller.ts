@@ -39,7 +39,7 @@ export class ProductController {
 
   @Get('/:id')
   public async findById(@Param('id') id: number) {
-    return fillObject(ProductRdo, this.productService.findById(id));
+    return fillObject(ProductRdo, this.productService.findById(+id));
   }
 
   @Post('upload')

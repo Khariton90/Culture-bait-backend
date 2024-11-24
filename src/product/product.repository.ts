@@ -35,7 +35,7 @@ export class ProductRepository
 
   public async findById(id: number): Promise<Product> {
     return this.prisma.product.findFirst({
-      where: { id },
+      where: { code: id },
     });
   }
 

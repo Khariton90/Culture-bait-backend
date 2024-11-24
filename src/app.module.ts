@@ -9,6 +9,7 @@ import { AuthModule } from './auth/auth.module';
 import envSchema from './env.schema';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { FILE_UPLOAD_DIR } from './product/product.constants';
+import { OrderModule } from './order/order.module';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { FILE_UPLOAD_DIR } from './product/product.constants';
     ProductModule,
     PrismaModule,
     AuthModule,
+    OrderModule,
   ],
   controllers: [],
   providers: [],

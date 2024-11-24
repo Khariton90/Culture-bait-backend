@@ -21,9 +21,33 @@ model User {
   phoneNumber  String
   passwordHash String
   role         String
-  email        String? 
+  email        String
+  orders       Order[]
 }
 
+model Order {
+  id              Int             @id @default(autoincrement())
+  paymentMethod   PaymentMethod
+  email           String
+  phone           String
+  amount          Float
+  finalPrice      Float
+  userId          Int
+  user            User            @relation(fields: [userId], references: [id])
+  status          OrderStatus
+  OrderToProduct  OrderToProduct[]
+  notes           String?
+  createdAt       DateTime?       @default(now())
+  updatedAt       DateTime?       @updatedAt
+}
+
+model OrderToProduct {
+  orderId    Int
+  productId  Int
+  order      Order  @relation(fields: [orderId], references: [id])
+  product    Product @relation(fields: [productId], references: [id])
+  @@id([orderId, productId])
+}
 
 model Category {
   id        Int     @id @default(autoincrement())
@@ -32,24 +56,46 @@ model Category {
 }
 
 model Product {
-  id         Int       @id @default(autoincrement())
-  img        String
-  title      String
-  description String?
-  price      Float
-  code       Int       @unique
-  qty        Int
-  isNew      Boolean   @default(false)
+  id           Int       @id @default(autoincrement())
+  img          String
+  title        String
+  description  String?
+  price        Float
+  code         Int       @unique
+  qty          Int
+  isNew        Boolean   @default(false)
   isBestSeller Boolean @default(false)
-  onSale     Boolean   @default(false)
-  clearance  Boolean   @default(false)
-  reviews    Int?       @default(0)
-  popularity Int?       @default(0)
-  rating     Int?       @default(0)
-  createdAt  DateTime? @default(now()) @map("created_at")
-  updatedAt  DateTime? @updatedAt @map("updated_at")
-  category   Category? @relation(fields: [categoryId], references: [id])
-  categoryId Int?
+  onSale       Boolean   @default(false)
+  clearance    Boolean   @default(false)
+  reviews      Int?       @default(0)
+  popularity   Int?       @default(0)
+  rating       Int?       @default(0)
+  createdAt    DateTime? @default(now()) @map("created_at")
+  updatedAt    DateTime? @updatedAt @map("updated_at")
+  category     Category? @relation(fields: [categoryId], references: [id])
+  OrderToProduct OrderToProduct[]
+  categoryId   Int?
+}
+
+model Address {
+  id         Int       @id @default(autoincrement())
+  street     String
+  city       String
+  postalCode String
+  country    String
+}
+
+enum PaymentMethod {
+  ON_SITE
+  IN_PERSON
+}
+
+enum OrderStatus {
+  PENDING
+  PROCESSING
+  SHIPPED
+  DELIVERED
+  CANCELLED
 }
 
 // model Image {
